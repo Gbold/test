@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: calibri;
+            zoom: 1;
+            transform: scale(.9);
+        }
+         body{
+            overflow-y: hidden;
+        } 
+        .a{
+            min-height: 100vh;
+            background:linear-gradient(135deg, rgb(255, 0, 255), rgb(255, 0, 76));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            
+        }
+        .b{
+            min-height: 300px;
+            min-width: 500px;
+            width: 35%;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            
+        }
+        .b > div:first-child{
+            flex: 2;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            margin: 30px 10px 0 10px;
+        }
+        .b > div:last-child{
+            flex: 7;
+        }
+        input{
+            outline: 0;
+        }
+        .b > div:first-child > input{
+            flex: 1;
+            padding: 10px 15px;
+            font-size: 50px;
+            text-align: right;
+            font-weight: bold;
+            font-family: calibri;
+            background: gainsboro;
+            border: 0;
+        }
+        .keys{
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 30px 10px;
+        } 
+        .keys button{
+            min-width: 120px;
+            padding: 15px 0;
+            margin: 10px;
+            flex: 1;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .operation{
+            display: flex;
+            padding: 5px 0;
+            font-size: 19px;
+        }
+        .operation > div{
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+        }
+        ::placeholder{
+            color: black;
+        }
+        :disabled{
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="a">
+        <div class="b">
+            <div>
+                <div class="operation">
+                    <div class="firstValue"></div>
+                    <div class="symbol"></div>
+                    <div class="lastValue"></div>
+                </div>
+                <input type="text" placeholder="0" disabled id="view">
+            </div>
+            <div>
+                <div class="keys">
+                    <button onclick="sendValue(this);">1</button>
+                    <button onclick="sendValue(this);">2</button>
+                    <button onclick="sendValue(this);">3</button>
+                    <button onclick="sendValue(this);">4</button>
+                    <button onclick="sendValue(this);">5</button>
+                    <button onclick="sendValue(this);">6</button>
+                    <button onclick="sendValue(this);">7</button>
+                    <button onclick="sendValue(this);">8</button>
+                    <button onclick="sendValue(this);">9</button>
+                    <button onclick="sendZero(this);">0</button>
+                    <button onclick="sendDot(this);">.</button>
+                    <button onclick="sendSymbol(this);">+</button>
+                    <button onclick="sendSymbol(this);">-</button>
+                    <button onclick="sendSymbol(this);">/</button>
+                    <button onclick="sendSymbol(this);">x</button>
+                    <button onclick="clearScr();">CE</button>
+                    <button onclick="deleteLast();">DEL</button>
+                    <button style="min-width: 80%;">=</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function clearScr(){
+        document.querySelector("#view").value = "";
+        document.querySelector(".firstValue").innerText = "";
+        document.querySelector(".lastValue").innerText = "";
+        document.querySelector(".symbol").innerText = "";
+    }
+    function sendValue(vara){
+        document.querySelector("#view").value = document.querySelector("input[type = 'text']").value + vara.innerText;
+    }
+    function sendDot(varc){
+        var pattern = /[.]/;
+        var result = pattern.test(document.querySelector("#view").value);
+        if(!result){
+            document.querySelector("#view").value = document.querySelector("input[type = 'text']").value + varc.innerText;
+        }
+    }
+    function sendZero(vard){
+        if(Number(document.querySelector("#view").value) !== 0){
+            sendValue(vard);
+        }
+    }
+    function sendSymbol(varb){
+        if(document.querySelector("#view").value.length > 0){
+            document.querySelector(".symbol").innerHTML = varb.innerHTML;
+            document.querySelector(".firstValue").innerHTML = document.querySelector("#view").value;
+            document.querySelector("#view").value = "";
+        }
+    }
+    function deleteLast(){
+        if(document.querySelector("#view").value.length > 0){
+            document.querySelector("#view").value = document.querySelector("#view").value.substring(0, (document.querySelector("#view").value.length - 1))
+        }
+    }
+</script>
+</html>
